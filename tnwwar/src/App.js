@@ -8,7 +8,7 @@ import PrchaseHistory from './pages/PrchaseHistory';
 import Profile from './pages/Profile';
 import ProductDetails from './pages/ProductDetails';
 import NotFound from './pages/NotFound';
-import { AuthProvider } from './context/AuthContext'; 
+import { AuthProvider } from './context/AuthContext';
 import Logo from "./assets/logos/mainLogo.svg"
 import Signup from './pages/Signup';
 
@@ -23,7 +23,7 @@ function App() {
   }, []);
 
   return (
-    <AuthProvider> 
+    <AuthProvider>
       <Router>
         {showSplash ? (
           <div
@@ -35,19 +35,19 @@ function App() {
               backgroundColor: '#f5f5f5',
             }}
           >
-            <img src={Logo} />
+            <img src={Logo} alt="Logo" />
           </div>
         ) : (
           <Routes>
-            <Route path="/" element={<Home />} /> 
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/saved" element={<SavedPage />} /> 
-            <Route path="/cart" element={<Cart />} /> 
-            <Route path="/prchase-history" element={<PrchaseHistory />} /> 
-            <Route path="/profile" element={<Profile />} /> 
+            <Route path="/saved" element={<SavedPage />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/prchase-history" element={<PrchaseHistory />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/productDetails/:id" element={<ProductDetails />} />
-            <Route path="/signup" element={<Signup />} /> 
-            <Route path="*" element={<NotFound />} /> 
+            <Route path="/signup" element={<Signup />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         )}
       </Router>
