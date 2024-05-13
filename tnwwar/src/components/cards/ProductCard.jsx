@@ -1,19 +1,24 @@
 import React from 'react';
+import useAddToCart from '../../hooks/useAddToCart';
 
-function ProductCard({ product, onAddToCart }) {
+function ProductCard({ product }) {
+    const { addToCart } = useAddToCart();
+
     const handleClick = () => {
         // Handle click to open card details
         // Example: history.push(`/productDetails/${product._id}`);
     };
 
-    const handleAddToCart = (event) => {
-        // Prevent the default behavior of the Link component
+    const handleAddToCart = async (event) => {
         event.preventDefault();
-        // Stop the event from propagating to the parent elements
         event.stopPropagation();
 
-        // Handle adding product to cart
-        // Example: onAddToCart(product);
+        try {
+            await addToCart(product._id);
+            console.log('Product added to cart');
+        } catch (error) {
+            console.error('Failed to add product to cart:', error);
+        }
     };
 
     return (

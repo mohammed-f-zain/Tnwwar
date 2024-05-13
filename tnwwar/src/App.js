@@ -4,13 +4,15 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import SavedPage from './pages/SavedPage';
 import Cart from './pages/Cart';
-import PrchaseHistory from './pages/PrchaseHistory';
+import PrchaseHistory from "./pages/PrchaseHistory"
 import Profile from './pages/Profile';
 import ProductDetails from './pages/ProductDetails';
 import NotFound from './pages/NotFound';
-import { AuthProvider } from './context/AuthContext';
-import Logo from "./assets/logos/mainLogo.svg"
 import Signup from './pages/Signup';
+import { AuthProvider } from './context/AuthContext';
+import PrivateRoute from './context/PrivateRoute';
+import Logo from './assets/logos/mainLogo.svg';
+
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -41,12 +43,12 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/saved" element={<SavedPage />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/prchase-history" element={<PrchaseHistory />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/productDetails/:id" element={<ProductDetails />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/saved" element={<PrivateRoute element={<SavedPage />} />} />
+            <Route path="/cart" element={<PrivateRoute element={<Cart />} />} />
+              <Route path="/purchase-history" element={<PrivateRoute element={<PrchaseHistory />} />} />
+            <Route path="/profile" element={<PrivateRoute element={<Profile />} />} />
+            <Route path="/productDetails/:id" element={<ProductDetails />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         )}

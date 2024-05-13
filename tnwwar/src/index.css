@@ -71,7 +71,19 @@
 .user-icon {
   margin-right: 5px;
 }
+.logout-button {
+  background-color: #ffff;
+  color: red;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
 
+.logout-button:hover {
+  background-color: #f3f3f3;
+  border-radius: 16px;
+transition: 1s;
+}
 /*----------------------- Home Carsoul style (Card) -----------------------*/
 
 .product-card {
@@ -519,4 +531,47 @@ input[type="number"] {
 
 .add-to-cart-btn:hover {
   background-color: #007979;
+
+}
+
+/*------------- Cart Style ------------- */
+.cart-items-container {
+  padding: 20px;
+}
+
+.cart-items-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.cart-item-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  width: calc(33.33% - 20px);
+  /* Adjust width based on your layout */
+  box-sizing: border-box;
+}
+
+.item-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.item-details {
+  text-align: left;
+}
+
+.item-details h3 {
+  margin: 0;
+}
+
+.item-details p {
+  margin: 5px 0;
+}
+
+.item-details button {
+  margin-top: 10px;
 }
