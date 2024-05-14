@@ -12,6 +12,7 @@ import Signup from './pages/Signup';
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './context/PrivateRoute';
 import Logo from './assets/logos/mainLogo.svg';
+import CheckOut from './pages/CheckOut';
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
             <Route path="/cart" element={<PrivateRoute element={<Cart />} />} />
               <Route path="/purchase-history" element={<PrivateRoute element={<PrchaseHistory />} />} />
             <Route path="/profile" element={<PrivateRoute element={<Profile />} />} />
+            <Route path="/check-out" element={<PrivateRoute element={<CheckOut />} />} />
             <Route path="/productDetails/:id" element={<ProductDetails />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
