@@ -26,8 +26,8 @@ function useTabNavigation() {
             case 'cart':
                 navigate('/cart');
                 break;
-            case 'purchaseHistory':
-                navigate('/prchase-history'); 
+            case 'purchase-history':
+                navigate('/purchase-history'); 
                 break;
             case 'profile':
                 navigate('/profile');

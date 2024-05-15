@@ -7,5 +7,4 @@ function PrivateRoute({ element }) {
 
     return authToken ? element : <Navigate to="/login" />;
 }
-
-export default PrivateRoute;
+export default PrivateRoute;    

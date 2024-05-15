@@ -11,7 +11,6 @@ import RightAside from '../components/Right-aside/RightAside';
 function HomeScreen() {
   const { activeTab, handleTabChange } = useTabNavigation();
   const [products, setProducts] = useState([]);
-
   return (
     <div className="container-fluid">
       <div className="row">

@@ -1,3 +1,4 @@
+// ProductDetails.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -6,14 +7,17 @@ import useTabNavigation from '../hooks/useTabNavigation';
 import Header from "../components/header/header";
 import RightAside from '../components/Right-aside/RightAside';
 import ProductCarousel from '../components/Home/ProductCarousel';
+import useAddToCart from '../hooks/useAddToCart';
+import CartNotification from '../components/Cart/CartNotification'; 
 
 function ProductDetails() {
-    const { id } = useParams(); // Extract the id parameter from the URL
+    const { id } = useParams();
     const { activeTab, handleTabChange } = useTabNavigation();
     const [product, setProduct] = useState(null);
     const [products, setProducts] = useState([]);
+    const { addToCart, showPopup } = useAddToCart();
+
     useEffect(() => {
-        // Fetch product details using the id
         axios.get(`http://localhost:8080/productDetails/${id}`)
             .then(response => {
                 setProduct(response.data);
@@ -23,10 +27,25 @@ function ProductDetails() {
             });
     }, [id]);
 
-    const handleAddToCart = () => {
-        // Handle adding product to cart
-        // For now, just log a message
-        console.log('Product added to cart:', product);
+    useEffect(() => {
+        axios.get('http://localhost:8080/suggestedProducts')
+            .then(response => {
+                setProducts(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching suggested products:', error);
+            });
+    }, []);
+
+    const handleAddToCart = async () => {
+        try {
+            if (product) {
+                await addToCart(product._id);
+                console.log('Product added to cart');
+            }
+        } catch (error) {
+            console.error('Failed to add product to cart:', error);
+        }
     };
 
     if (!product) {
@@ -58,18 +77,20 @@ function ProductDetails() {
                                 <button className="add-to-cart-btn" onClick={handleAddToCart}>Add to Cart</button>
                             </div>
                         </div>
-                      <div className='container mt-5'>
+                        <div className='container mt-5'>
                             <h2>Suggested Products</h2>
-                            <div >
+                            <div>
                                 <ProductCarousel products={products} />
                             </div>
-                      </div>
+                        </div>
                     </div>
                 </div>
                 <div className='col-sm-2'>
                     <RightAside />
                 </div>
             </div>
+            {/* Render the CartNotification component */}
+            <CartNotification show={showPopup} message="Product added to cart" />
         </div>
     );
 }

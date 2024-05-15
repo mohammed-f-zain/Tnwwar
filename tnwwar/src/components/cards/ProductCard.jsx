@@ -1,8 +1,11 @@
+// ProductCard.jsx
 import React from 'react';
 import useAddToCart from '../../hooks/useAddToCart';
+import CartNotification from '../Cart/CartNotification'; 
+
 
 function ProductCard({ product }) {
-    const { addToCart } = useAddToCart();
+    const { addToCart, showPopup } = useAddToCart();
 
     const handleClick = () => {
         // Handle click to open card details
@@ -27,6 +30,7 @@ function ProductCard({ product }) {
             <div className="card-body text-center">
                 <h6 className="card-title product-name">{product.product_name}</h6>
                 <button className="btn btn-primary" onClick={handleAddToCart}>Add to Cart</button>
+                <CartNotification show={showPopup} message="Product added to cart" />
             </div>
         </div>
     );

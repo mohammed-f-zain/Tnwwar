@@ -1,8 +1,11 @@
+// useAddToCart.js
+import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 
 const useAddToCart = () => {
     const { authToken } = useAuth();
+    const [showPopup, setShowPopup] = useState(false);
 
     const addToCart = async (productId) => {
         try {
@@ -17,13 +20,21 @@ const useAddToCart = () => {
                 }
             });
 
+            // Show popup when product is successfully added to cart
+            setShowPopup(true);
+
+            // Hide popup after 3 seconds
+            setTimeout(() => {
+                setShowPopup(false);
+            }, 3000);
+
             return response.data;
         } catch (error) {
             throw new Error('Error adding to cart: ' + error.message);
         }
     };
 
-    return { addToCart };
+    return { addToCart, showPopup };
 };
 
 export default useAddToCart;
