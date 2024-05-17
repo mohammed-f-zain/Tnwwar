@@ -1,23 +1,10 @@
-// ProductCarousel.js
-import React, { useEffect, useState, useRef } from 'react';
-import axios from 'axios';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import ProductCard from './../cards/ProductCard';
 
-function ProductCarousel() {
-    const [products, setProducts] = useState([]);
+function ProductCarousel({ products }) {
     const [currentSlide, setCurrentSlide] = useState(0);
     const carouselRef = useRef(null);
-
-    useEffect(() => {
-        axios.get('http://localhost:8080/allProducts')
-            .then(response => {
-                setProducts(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching products:', error);
-            });
-    }, []);
 
     // Chunk function to split array into groups
     const chunkArray = (arr, size) => {

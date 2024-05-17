@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  text-decoration: none !important;
 }
 
 /*----------------------- Aside Style ----------------------- */
@@ -10,16 +11,19 @@
   width: 100%;
   min-height: 100vh;
   height: 100%;
-  background-color: #FFFFFF;
+background: radial-gradient(circle at 24.1% 68.8%, rgb(0, 148, 151) 0%, rgb(255, 255, 255) 99.4%);
   margin-left: -10px;
   box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.1);
+  color: #000;
 }
 
 .logo {
   padding: 20px;
+  
 }
 
 .tab {
+  
   padding: 15px 20px;
   cursor: pointer;
   border-left: 5px solid transparent;
@@ -85,49 +89,154 @@
 transition: 1s;
 }
 /*----------------------- Home Carsoul style (Card) -----------------------*/
-
 .product-card {
-  background-color: #fff;
+  padding: 20px;
+  max-width: 220px;
+  margin: 20px;
+  height: 450px;
+  transition: transform 0.3s;
+  -webkit-transition: transform 0.3s;
+  -moz-transition: transform 0.3s;
+  -ms-transition: transform 0.3s;
+  -o-transition: transform 0.3s;
+  /* glass effect */
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.25);
   border-radius: 16px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  overflow: hidden;
-  width: 100%;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(1.3px);
+  -webkit-backdrop-filter: blur(1.3px);
+  border: 1px solid rgba(255, 255, 255, 1);
+  position: relative;
+  /* Added for absolute positioning of the wishlist button */
 }
 
 .product-card:hover {
-  transform: translateY(-5px);
+  transform: scale(1.05);
+  -webkit-transform: scale(1.05);
+  -moz-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  -o-transform: scale(1.05);
+}
+
+.upper-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  /* Added for positioning the wishlist button */
+}
+
+.wishlist-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: red;
+  z-index: 1;
 }
 
 .product-image {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
+  width: 80%;
   border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+
+.card-body {
+  text-align: center;
 }
 
 .card-title {
-  margin-top: 10px;
-  font-size: 16px;
+  font-size: 1.2rem;
+  margin: 10px 0;
   color: #333;
-  text-decoration: none !important;
 }
 
-.btn-primary {
-  background-color: #009393;
-  border-color: #007979;
-  color: #fff;
-  border-radius: 5px;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.card-body p {
+  font-size: 14px;
+  margin: 10px 0;
+  color: #555;
 }
 
-.btn-primary:hover {
-  background-color: #007979;
+.card-body h2 {
+  font-size: 2rem;
+  margin: 10px 0;
+  color: #000;
 }
 
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 30px;
+  border: 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10rem;
+  transition: all 0.02s;
+  font-weight: bold;
+  color: black;
 
+  z-index: 0;
+  box-shadow: 0 0px 7px -5px rgba(0, 0, 0, 0.5);
+}
+
+.button:hover {
+  background: rgb(193, 228, 248);
+  color: rgb(33, 0, 85);
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+.hoverEffect {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.hoverEffect div {
+  background: rgb(1, 226, 229);
+  background: linear-gradient(90deg,
+      rgb(1, 226, 229) 0%,
+      rgb(1, 226, 229) 30%,
+      rgb(240, 211, 13) 49%,
+      rgb(196, 169, 14) 100%);
+  border-radius: 40rem;
+  width: 10rem;
+  height: 10rem;
+  transition: 0.4s;
+  filter: blur(20px);
+  animation: effect infinite 3s linear;
+  opacity: 0.5;
+
+}
+
+.button:hover .hoverEffect div {
+  width: 8rem;
+  height: 8rem;
+}
+
+@keyframes effect {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 .product-carousel {
   position: relative;
@@ -178,75 +287,83 @@ transition: 1s;
 /*----------------------- Home Offer Section -----------------------*/
 
 .Offer-card {
-  width: 100%;
-  background-color: #f6f6f6;
+  position: relative;
+
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   display: flex;
   gap: 25px;
   padding: 35px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.Offer-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .Offer-card img {
-  width: 300px !important;
-  height: 300px;
+  width: 300px ;
+  height: 300px ;
   border-radius: 50%;
+  object-fit: contain;
 }
 
-.product_name {
+.offer-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.offer_product_name {
   color: #009393;
+  font-size: 1.8em;
+  margin: 0;
 }
 
-.product_description {
+.offer_product_description {
   color: #3b3b3b;
+  margin: 10px 0;
 }
 
-.product_price {
+.offer_product_price {
   font-weight: bold;
+  font-size: 1.5em;
+  color: #2c2c2c;
+  margin: 10px 0;
+}
+
+.offer-right-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 10px 0;
+}
+
+.offer_product_location,
+.offer_product_category {
+  color: #616161;
 
 }
 
-
-input[type="number"] {
-  border: none;
-  outline: none;
-  width: 20px;
-  text-align: center;
-
-}
-
-.quantity-controls button:first-child {
-  color: #009393;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 24px;
-  background-color: #f6f6f6;
-}
-
-
-
-.quantity-controls button:last-child {
-  color: #009393;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 24px;
-  background-color: #f6f6f6;
-}
-
-.offer_addtoCart {
+.offer_Cart {
   background-color: #009393;
   color: white;
   border: none;
-  padding: 15px;
+  padding: 15px 30px;
   border-radius: 16px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
 }
 
-.offer_addtoCart:hover {
+.offer_Cart:hover {
   background-color: #007979;
+}
+.offer-details button{
+  width: 25%;
 }
 
 
@@ -256,7 +373,6 @@ input[type="number"] {
   height: 100%;
   padding: 20px;
   border-radius: 5px;
-  box-shadow: -4px 0px 8px rgba(0, 0, 0, 0.1);
   height: 100%;
 }
 
@@ -479,7 +595,6 @@ input[type="number"] {
 }
 
 .products_details_container h2 {
-  color: #009393;
   font-weight: bold;
 }
 
@@ -695,4 +810,115 @@ input[type="number"] {
 }
 .purchase-title{
   color: #009393;
+}
+/* saved page */
+.wishlist-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.wishlist-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.wishlist-item img {
+  width: 100%;
+  height: auto;
+}
+
+/* fav button */
+.fav-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  /* Adjust size as needed */
+  color: red;
+  /* Red color for the heart icon */
+  outline: none;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.fav-btn:hover {
+  transform: scale(1.1);
+}
+/* ------------------ categories list style ------------------------------ */
+.categories-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.categories-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.category-card {
+  width: 250px;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  background-color: #fff;
+  cursor: pointer;
+  color: black;
+}
+
+.category-card:hover {
+  transform: translateY(-10px);
+  color: #009393 ;
+}
+
+.category-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.category-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 10px;
+}
+
+.category-description {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+}
+/* --------- profile page ---------- */
+/* Profile.css (or any other appropriate CSS file) */
+
+.profile-info {
+  margin-top: 20px;
+}
+
+.profile-details {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.profile-details img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.profile-details p {
+  margin: 10px 0;
+}
+
+.content {
+  padding: 20px;
 }

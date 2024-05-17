@@ -1,8 +1,7 @@
-// ProductCard.jsx
 import React from 'react';
 import useAddToCart from '../../hooks/useAddToCart';
-import CartNotification from '../Cart/CartNotification'; 
-
+import CartNotification from '../Cart/CartNotification';
+import HeartButton from '../cards/HeartButton'; // Adjust the path based on your file structure
 
 function ProductCard({ product }) {
     const { addToCart, showPopup } = useAddToCart();
@@ -24,12 +23,30 @@ function ProductCard({ product }) {
         }
     };
 
+    const handleWishlistClick = (event) => {
+        event.stopPropagation(); 
+    };
+
     return (
-        <div className="card p-3 product-card" onClick={handleClick}>
-            <img src={product.img_url} alt={product.product_name} className="card-img-top mx-3 product-image" />
+        <div className="product-card" onClick={handleClick}>
+            <div className="upper-div">
+                
+                <img src={product.img_url} alt={product.product_name} className="card-img-top mx-3 product-image" />
+            </div>
             <div className="card-body text-center">
-                <h6 className="card-title product-name">{product.product_name}</h6>
-                <button className="btn btn-primary" onClick={handleAddToCart}>Add to Cart</button>
+                <h3 className="card-title product-name">{product.product_name}</h3>
+                <p>{product.description}</p>
+                <h2>${product.price}</h2>
+                <div onClick={handleWishlistClick}> 
+                    <HeartButton productId={product._id} className="wishlist-button" />
+                </div>
+                <button className="button" onClick={handleAddToCart}>
+                    Add to cart
+                    <div className="hoverEffect">
+                        <div></div>
+                    </div>
+                </button>
+                <p>{product.product_location}</p>
                 <CartNotification show={showPopup} message="Product added to cart" />
             </div>
         </div>

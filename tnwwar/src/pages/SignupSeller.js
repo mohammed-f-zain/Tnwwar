@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import logo from "../assets/logos/mainLogo.svg";
+import { Link, useNavigate } from 'react-router-dom';
+import logo from "../assets/logos/mainLogo.svg"
 
-function Signup() {
-    const [userName, setUserName] = useState('');
+function SignupSeller() {
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [selectedLocation, setSelectedLocation] = useState('');
-    const [generalError, setGeneralError] = useState('');
-
+    const [location, setLocation] = useState('');
+    const [usernameError, setUsernameError] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [repeatPasswordError, setRepeatPasswordError] = useState('');
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const [phoneNumberError, setPhoneNumberError] = useState('');
+    const [locationError, setLocationError] = useState('');
+    const [generalError, setGeneralError] = useState('');
+    const [signupSuccess, setSignupSuccess] = useState('');
 
     const navigate = useNavigate();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[0-9]{10}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     const handleEmailChange = (e) => {
         const value = e.target.value;
@@ -28,6 +32,17 @@ function Signup() {
             setEmailError('Invalid email format');
         } else {
             setEmailError('');
+        }
+    };
+
+    const handlePhoneNumberChange = (e) => {
+        const value = e.target.value;
+        setPhoneNumber(value);
+
+        if (!phoneRegex.test(value)) {
+            setPhoneNumberError('Invalid phone number format');
+        } else {
+            setPhoneNumberError('');
         }
     };
 
@@ -59,37 +74,39 @@ function Signup() {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault();
 
-        if (emailError || passwordError || repeatPasswordError || !selectedLocation) {
+        if (emailError || phoneNumberError || passwordError || repeatPasswordError) {
             setGeneralError('Please correct the errors before submitting.');
             return;
         }
 
         try {
-            const response = await fetch('http://localhost:8080/userLogin', {
+            const response = await fetch('http://localhost:8080/sellerSignUp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    user_name: userName,
+                    user_name: username,
                     user_email: email,
                     password: password,
                     phone_number: phoneNumber,
-                    user_location: selectedLocation,
+                    user_location: location,
                 }),
             });
 
+            const data = await response.json();
+
             if (response.ok) {
-                navigate('/login');
+                // Sign-up successful
+                setSignupSuccess('Sign-up successful!');
+                setGeneralError('');
+                navigate('/login'); // Redirect to login page after successful sign-up
             } else {
-                const errorData = await response.json();
-                setGeneralError('Signup failed. Please try again.');
-                if (errorData.password) {
-                    setPasswordError(errorData.password);
-                }
+                // Sign-up failed
+                setGeneralError(data.error || 'Sign-up failed. Please try again.');
             }
         } catch (error) {
             console.error('An error occurred:', error);
@@ -97,23 +114,22 @@ function Signup() {
         }
     };
 
-    const jordanCities = ['Amman', 'Irbid', 'Zarqa', 'Aqaba', 'Madaba', 'Karak', 'Maan', 'Salt', 'Tafilah', 'Jerash'];
-
     return (
         <div className='signup_container'>
             <div className='signup_inner'>
-                <img src={logo} alt="Logo" />
-                <h1>Signup</h1>
-                <form className='signup_form' onSubmit={handleSubmit}>
+                <img src={logo}></img>
+                <h1>Create Seller Account</h1>
+                <form className='signup_form' onSubmit={handleSignup}>
                     <div className='signup_input_group'>
-                        <label htmlFor='user_name'>Full Name</label>
+                        <label htmlFor='username'>Username</label>
                         <input
                             type='text'
-                            id='user_name'
-                            placeholder='Enter your full name'
-                            value={userName}
-                            onChange={(e) => setUserName(e.target.value)}
+                            id='username'
+                            placeholder='Enter your username'
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                         />
+                        {usernameError && <p style={{ color: 'red' }}>{usernameError}</p>}
                     </div>
 
                     <div className='signup_input_group'>
@@ -153,42 +169,42 @@ function Signup() {
                     </div>
 
                     <div className='signup_input_group'>
-                        <label htmlFor='phone_number'>Phone Number</label>
+                        <label htmlFor='phoneNumber'>Phone Number</label>
                         <input
                             type='text'
-                            id='phone_number'
+                            id='phoneNumber'
                             placeholder='Enter your phone number'
                             value={phoneNumber}
-                            onChange={(e) => setPhoneNumber(e.target.value)}
+                            onChange={handlePhoneNumberChange}
                         />
+                        {phoneNumberError && <p style={{ color: 'red' }}>{phoneNumberError}</p>}
                     </div>
 
                     <div className='signup_input_group'>
-                        <label htmlFor='user_location'>Location</label>
-                        <select
-                            id='user_location'
-                            value={selectedLocation}
-                            onChange={(e) => setSelectedLocation(e.target.value)}
-                        >
-                            <option value='' disabled>Select your location</option>
-                            {jordanCities.map(city => (
-                                <option key={city} value={city}>{city}</option>
-                            ))}
-                        </select>
+                        <label htmlFor='location'>Location</label>
+                        <input
+                            type='text'
+                            id='location'
+                            placeholder='Enter your location'
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                        />
+                        {locationError && <p style={{ color: 'red' }}>{locationError}</p>}
                     </div>
 
-                    {generalError && <p style={{ color: 'red' }}>{generalError}</p>}
-
-                    <button type='submit' className='signup_button'>Signup</button>
+                    <button type='submit' className='signup_button'>Create Account</button>
                 </form>
 
-                <p>
-                    Already have an account?{' '}
-                    <Link to="/login">Sign In!</Link>
-                </p>
+                {generalError && <p style={{ color: 'red' }}>{generalError}</p>}
+                {signupSuccess && <p style={{ color: 'green' }}>{signupSuccess}</p>}
+
+                <div className='signup_divider'>_________ Already have an account? _________</div>
+                <div className='signup_extra_buttons'>
+                    <Link className='signup_login_button' to="/login">Login</Link>
+                </div>
             </div>
         </div>
     );
 }
 
-export default Signup;
+export default SignupSeller;

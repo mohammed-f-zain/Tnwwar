@@ -13,6 +13,10 @@ import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './context/PrivateRoute';
 import Logo from './assets/logos/mainLogo.svg';
 import CheckOut from './pages/CheckOut';
+import SignupSeller from './pages/SignupSeller';
+import SignupUser from './pages/SignupUser';
+import Categorieslist from './components/categories/Categorieslist';
+import CategoryProducts from './pages/CategoryProducts';
 
 
 function App() {
@@ -44,13 +48,17 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+              <Route path="/signupuser" element={<Signup />} />
+            <Route path="/signupseller" element={<SignupSeller />} />
+              <Route path="/Categories" element={<Categorieslist />} />
+            {/* <Route path="/signupuser" element={<SignupUser />} /> */}
             <Route path="/saved" element={<PrivateRoute element={<SavedPage />} />} />
             <Route path="/cart" element={<PrivateRoute element={<Cart />} />} />
               <Route path="/purchase-history" element={<PrivateRoute element={<PrchaseHistory />} />} />
             <Route path="/profile" element={<PrivateRoute element={<Profile />} />} />
             <Route path="/check-out" element={<PrivateRoute element={<CheckOut />} />} />
             <Route path="/productDetails/:id" element={<ProductDetails />} />
+              <Route path="/category/:categoryName" element={<CategoryProducts />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         )}

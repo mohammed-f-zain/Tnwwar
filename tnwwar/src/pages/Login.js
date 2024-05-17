@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import logo from "../assets/logos/mainLogo.svg"
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -67,6 +68,7 @@ function Login() {
     return (
         <div className='signin_container'>
             <div className='signin_inner'>
+                <img src={logo}></img>
                 <h1>Login</h1>
                 <form className='signin_form' onSubmit={handleLogin}>
                     <div className='signin_input_group'>
@@ -102,8 +104,8 @@ function Login() {
                 <a href='#' className='signin_forgot_password'>Forgot password?</a>
                 <div className='signin_divider'>_________ New to Tnwar _________</div>
                 <div className='signin_extra_buttons'>
-                    <Link className='signin_create_account_button' to="/signup">Create New Tnwar Account</Link>
-                    <Link className='signin_create_seller_button' to="/signup">Create New Seller Account</Link>
+                    <Link className='signin_create_account_button' to="/signupuser">Create New Tnwar Account</Link>
+                    <Link className='signin_create_seller_button' to="/signupseller">Create New Seller Account</Link>
                 </div>
             </div>
         </div>

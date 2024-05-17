@@ -4,7 +4,6 @@ import { useAuth } from '../../context/AuthContext';
 import useAddToCart from '../../hooks/useAddToCart';
 import useRemoveFromCart from '../../hooks/useRemoveFromCart';
 
-
 function CartItems() {
     const { authToken } = useAuth();
     const { addToCart } = useAddToCart();
@@ -13,9 +12,11 @@ function CartItems() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+
     const handleCheckout = () => {
         navigate('/check-out');
     };
+
     useEffect(() => {
         const fetchCartItems = async () => {
             try {
@@ -47,7 +48,7 @@ function CartItems() {
                         return response.json();
                     }).then(productDetails => ({
                         ...item,
-                        productDetails
+                        productDetails: productDetails.productDetails
                     }))
                 );
 
@@ -117,7 +118,7 @@ function CartItems() {
                                     <div className='inner-data'>
                                         <h3>{item.productDetails.product_name}</h3>
                                         <p>{item.productDetails.description}</p>
-                                        <p className='price'>${item.productDetails.price} </p>
+                                        <p className='price'>${item.productDetails.price}</p>
                                         <div className="quantity-controls">
                                             <button onClick={() => handleDecreaseQuantity(item.cart_product)}>-</button>
                                             <span>Quantity: {item.quantity}</span>
@@ -143,7 +144,6 @@ function CartItems() {
                 <p>Total: ${calculateTotal()}</p>
                 <button className="checkout-button" onClick={handleCheckout}>Check Out</button>
             </div>
-
         </div>
     );
 }
