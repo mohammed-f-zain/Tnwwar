@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import logo from "../assets/logos/mainLogo.svg";
 
-function Login() {
+function SellerLogin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
@@ -36,7 +36,7 @@ function Login() {
         }
 
         try {
-            const response = await fetch('http://localhost:8080/userRegister', {
+            const response = await fetch('http://localhost:8080/sellerLogin', { 
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ function Login() {
                 await login(data.accessToken);
                 setLoginSuccess('Login successful!');
                 setGeneralError('');
-                navigate('/');
+                navigate('/sellerdashboard'); // Navigate to the seller dashboard
             } else {
                 // Login failed
                 setGeneralError(data.error || 'Login failed. Please try again.');
@@ -69,7 +69,7 @@ function Login() {
         <div className='signin_container'>
             <div className='signin_inner'>
                 <img src={logo} alt="Logo" />
-                <h1>Login</h1>
+                <h1>Seller Login</h1>
                 <form className='signin_form' onSubmit={handleLogin}>
                     <div className='signin_input_group'>
                         <label htmlFor='email'>Email</label>
@@ -102,15 +102,15 @@ function Login() {
                 {loginSuccess && <p style={{ color: 'green' }}>{loginSuccess}</p>}
 
                 <a href='#' className='signin_forgot_password'>Forgot password?</a>
-                <a href='/sellerlogin' className='signin_forgot_password sellerlognav' >You Are a Seller Login From Here !</a>
                 <div className='signin_divider'>_________ New to Tnwar _________</div>
                 <div className='signin_extra_buttons'>
                     <Link className='signin_create_account_button' to="/signupuser">Create New Tnwar Account</Link>
                     <Link className='signin_create_seller_button' to="/signupseller">Create New Seller Account</Link>
                 </div>
+                <p>If you are not a seller, please <Link to="/login">login here</Link>.</p>
             </div>
         </div>
     );
 }
 
-export default Login;
+export default SellerLogin;

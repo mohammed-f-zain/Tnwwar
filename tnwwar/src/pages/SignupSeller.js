@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from "../assets/logos/mainLogo.svg"
+import logo from "../assets/logos/mainLogo.svg";
 
 function SignupSeller() {
     const [username, setUsername] = useState('');
@@ -9,12 +9,14 @@ function SignupSeller() {
     const [repeatPassword, setRepeatPassword] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [location, setLocation] = useState('');
+    const [commercialRecord, setCommercialRecord] = useState('');
     const [usernameError, setUsernameError] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [repeatPasswordError, setRepeatPasswordError] = useState('');
     const [phoneNumberError, setPhoneNumberError] = useState('');
     const [locationError, setLocationError] = useState('');
+    const [commercialRecordError, setCommercialRecordError] = useState('');
     const [generalError, setGeneralError] = useState('');
     const [signupSuccess, setSignupSuccess] = useState('');
 
@@ -23,6 +25,10 @@ function SignupSeller() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[0-9]{10}$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const commercialRecordRegex = /^[0-9]{10}$/;
+
+    // Jordan cities
+    const jordanCities = ['Amman', 'Irbid', 'Zarqa', 'Aqaba', 'Madaba', 'Salt', 'Karak', 'Maan', 'Tafila', 'Jerash', 'Mafraq', 'Ajloun'];
 
     const handleEmailChange = (e) => {
         const value = e.target.value;
@@ -74,10 +80,21 @@ function SignupSeller() {
         }
     };
 
+    const handleCommercialRecordChange = (e) => {
+        const value = e.target.value;
+        setCommercialRecord(value);
+
+        if (!commercialRecordRegex.test(value)) {
+            setCommercialRecordError('Commercial record must contain 10 numbers');
+        } else {
+            setCommercialRecordError('');
+        }
+    };
+
     const handleSignup = async (e) => {
         e.preventDefault();
 
-        if (emailError || phoneNumberError || passwordError || repeatPasswordError) {
+        if (emailError || phoneNumberError || passwordError || repeatPasswordError || commercialRecordError) {
             setGeneralError('Please correct the errors before submitting.');
             return;
         }
@@ -94,6 +111,7 @@ function SignupSeller() {
                     password: password,
                     phone_number: phoneNumber,
                     user_location: location,
+                    Commercial_Record: commercialRecord,
                 }),
             });
 
@@ -117,7 +135,7 @@ function SignupSeller() {
     return (
         <div className='signup_container'>
             <div className='signup_inner'>
-                <img src={logo}></img>
+                <img src={logo} alt="logo"></img>
                 <h1>Create Seller Account</h1>
                 <form className='signup_form' onSubmit={handleSignup}>
                     <div className='signup_input_group'>
@@ -182,16 +200,30 @@ function SignupSeller() {
 
                     <div className='signup_input_group'>
                         <label htmlFor='location'>Location</label>
-                        <input
-                            type='text'
+                        <select
                             id='location'
-                            placeholder='Enter your location'
                             value={location}
                             onChange={(e) => setLocation(e.target.value)}
-                        />
+                        >
+                            <option value="">Select your location</option>
+                            {jordanCities.map((city, index) => (
+                                <option key={index} value={city}>{city}</option>
+                            ))}
+                        </select>
                         {locationError && <p style={{ color: 'red' }}>{locationError}</p>}
                     </div>
 
+                    <div className='signup_input_group'>
+                        <label htmlFor='commercialRecord'>Commercial Record</label>
+                        <input
+                            type='text'
+                            id='commercialRecord'
+                            placeholder='Enter your commercial record'
+                            value={commercialRecord}
+                            onChange={handleCommercialRecordChange}
+                        />
+                        {commercialRecordError && <p style={{ color: 'red' }}>{commercialRecordError}</p>}
+                    </div>
                     <button type='submit' className='signup_button'>Create Account</button>
                 </form>
 
@@ -206,5 +238,4 @@ function SignupSeller() {
         </div>
     );
 }
-
 export default SignupSeller;

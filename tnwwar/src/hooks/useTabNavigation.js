@@ -29,8 +29,14 @@ function useTabNavigation() {
             case 'purchase-history':
                 navigate('/purchase-history'); 
                 break;
+            case 'add-product':
+                navigate('/add-product'); 
+                break;
             case 'profile':
                 navigate('/profile');
+                break;
+            case 'sellerdashboard':
+                navigate('/sellerdashboard');
                 break;
             default:
                 break;

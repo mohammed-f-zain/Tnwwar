@@ -1,14 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import useAddToCart from '../../hooks/useAddToCart';
 import CartNotification from '../Cart/CartNotification';
 import HeartButton from '../cards/HeartButton'; // Adjust the path based on your file structure
 
 function ProductCard({ product }) {
+    const navigate = useNavigate();
     const { addToCart, showPopup } = useAddToCart();
 
     const handleClick = () => {
-        // Handle click to open card details
-        // Example: history.push(`/productDetails/${product._id}`);
+        navigate(`/productDetails/${product._id}`);
     };
 
     const handleAddToCart = async (event) => {
@@ -24,20 +25,20 @@ function ProductCard({ product }) {
     };
 
     const handleWishlistClick = (event) => {
-        event.stopPropagation(); 
+        event.stopPropagation();
+        event.preventDefault();
     };
 
     return (
         <div className="product-card" onClick={handleClick}>
             <div className="upper-div">
-                
                 <img src={product.img_url} alt={product.product_name} className="card-img-top mx-3 product-image" />
             </div>
             <div className="card-body text-center">
                 <h3 className="card-title product-name">{product.product_name}</h3>
                 <p>{product.description}</p>
                 <h2>${product.price}</h2>
-                <div onClick={handleWishlistClick}> 
+                <div onClick={handleWishlistClick}>
                     <HeartButton productId={product._id} className="wishlist-button" />
                 </div>
                 <button className="button" onClick={handleAddToCart}>
@@ -54,3 +55,4 @@ function ProductCard({ product }) {
 }
 
 export default ProductCard;
+

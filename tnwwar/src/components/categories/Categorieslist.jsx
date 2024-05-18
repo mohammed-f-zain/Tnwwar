@@ -27,7 +27,7 @@ function Categorieslist() {
                     <Link to={`/category/${category.category_name}`} key={category._id} className="category-link">
                         <div className="category-card">
                             <img src={category.category_img} alt={category.category_name} className="category-img" />
-                            <h2>{category.category_name}</h2>
+                            <h5>{category.category_name}</h5>
                         </div>
                     </Link>
                 ))}

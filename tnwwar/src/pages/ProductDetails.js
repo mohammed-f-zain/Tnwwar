@@ -8,6 +8,8 @@ import RightAside from '../components/Right-aside/RightAside';
 import ProductCarousel from '../components/Home/ProductCarousel';
 import useAddToCart from '../hooks/useAddToCart';
 import CartNotification from '../components/Cart/CartNotification';
+import { useAuth } from '../context/AuthContext';
+import StarRating from '../components/Home/StarRating';
 
 function ProductDetails() {
     const { id } = useParams();
@@ -15,7 +17,10 @@ function ProductDetails() {
     const [product, setProduct] = useState(null);
     const [relatedProducts, setRelatedProducts] = useState([]);
     const [bestOfProducts, setBestOfProducts] = useState([]);
+    const [newComment, setNewComment] = useState('');
+    const [showAllComments, setShowAllComments] = useState(false); // State to track if all comments should be displayed
     const { addToCart, showPopup } = useAddToCart();
+    const { authToken } = useAuth();
 
     useEffect(() => {
         axios.get(`http://localhost:8080/productDetails/${id}`)
@@ -28,7 +33,7 @@ function ProductDetails() {
             .catch(error => {
                 console.error('Error fetching product details:', error);
             });
-    }, [id]);
+    }, [id, newComment]);
 
     const handleAddToCart = async () => {
         try {
@@ -39,6 +44,25 @@ function ProductDetails() {
         } catch (error) {
             console.error('Failed to add product to cart:', error);
         }
+    };
+
+    const handleSubmitComment = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.post(`http://localhost:8080/addComment/${id}`, { userComment: newComment }, {
+                headers: {
+                    Authorization: `Bearer ${authToken}`
+                }
+            });
+            console.log('Comment added successfully');
+            setNewComment('');
+        } catch (error) {
+            console.error('Failed to add comment:', error);
+        }
+    };
+
+    const handleShowMoreComments = () => {
+        setShowAllComments(true);
     };
 
     if (!product) {
@@ -60,19 +84,48 @@ function ProductDetails() {
                                 <img src={product.img_url} alt={product.product_name} />
                             </div>
                             <div className='product_details_container'>
-                                <p> <h3>{product.product_name}</h3></p>
+                                <p><h3>{product.product_name}</h3></p>
+                                <StarRating rating={product.rating} />
                                 <h5>Description</h5>
-                                <p> <span>{product.description}</span></p>
+                                <p><span>{product.description}</span></p>
                                 <h5>Price</h5>
-                                <p> <span>${product.price}</span></p>
+                                <p><span>${product.price}</span></p>
                                 <h5>Category</h5>
-                                <p> <span>{product.product_category.category_name}</span></p>
-                                <button class="button" onClick={handleAddToCart}>
+                                <p><span>{product.product_category.category_name}</span></p>
+                                <button className="button" onClick={handleAddToCart}>
                                     Add to cart
-                                    <div class="hoverEffect">
+                                    <div className="hoverEffect">
                                         <div></div>
                                     </div>
                                 </button>
+                            </div>
+                        </div>
+                        <div className='container'>
+                            <div className='comments_section'>
+                                <h4>Reviews ({product.comments.length})</h4>
+                                {product.comments.slice(0, showAllComments ? product.comments.length : 2).map(comment => (
+                                    <div className='comment' key={comment._id}>
+                                        <div className='comment-data'>
+                                            <img src={comment.comment_user.profile_img} className='comment-img' alt="User" />
+                                            <p className='comment_user'>{comment.comment_user.user_name}</p>
+                                        </div>
+                                        <p className='comment-text'>{comment.comment}</p>
+                                        <p className='comment_time'>{new Date(comment.comment_At).toLocaleString()}</p>
+                                    </div>
+                                ))}
+                                {product.comments.length === 0 && <p>No comments yet</p>}
+                                {product.comments.length > 2 && !showAllComments && <a className='showmore-comments' onClick={handleShowMoreComments}>Show More Comments ...</a>}
+                                <div className='comment_form'>
+                                    <h4>Add a Review</h4>
+                                    <form onSubmit={handleSubmitComment}>
+                                        <textarea
+                                            value={newComment}
+                                            onChange={(e) => setNewComment(e.target.value)}
+                                            placeholder="Write your comment here..."
+                                        />
+                                        <button type="submit">Submit</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                         <div className='container mt-5'>
@@ -87,7 +140,6 @@ function ProductDetails() {
                                 <ProductCarousel products={relatedProducts} />
                             </div>
                         </div>
-                        
                     </div>
                 </div>
                 <div className='col-sm-2'>

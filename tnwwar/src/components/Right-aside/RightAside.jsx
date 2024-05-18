@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import productimage from "../../assets/images/product.png"
+import StarRating from '../Home/StarRating';
 
 function RightAside() {
     const [dailyDeals, setDailyDeals] = useState([]);
@@ -12,7 +13,7 @@ function RightAside() {
                 // Shuffle the products array
                 const shuffledProducts = response.data.sort(() => Math.random() - 0.5);
                 // Get the first 5 products
-                const randomProducts = shuffledProducts.slice(0, 5);
+                const randomProducts = shuffledProducts.slice(0, 10);
                 // Set the fetched random products in state
                 setDailyDeals(randomProducts);
             })

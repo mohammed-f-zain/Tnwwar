@@ -54,17 +54,18 @@ function SavedPage() {
               <p>Error: {error}</p>
             ) : (
               <div>
-                <h2>Wishlist</h2>
+                <h2>Your Wishlist</h2>
                 <div className="wishlist-items">
                   {wishlistItems.map(item => (
                     <div key={item._id} className="wishlist-item">
                       <div className="wishlist-item-header">
-                        <HeartButton productId={item._id} onWishlistChange={handleWishlistChange} className="wishlist-button" /> {/* Add HeartButton */}
                         <img src={item.img_url} alt={item.product_name} className="wishlist-item-image" />
                       </div>
-                      <p>{item.product_name}</p>
-                      <p>${item.price}</p>
-                      {/* Add any other details you want to display */}
+                      <div className='wish-data'>
+                        <h3>{item.product_name}</h3>
+                        <p>${item.price}</p>
+                      </div>
+                        <HeartButton productId={item._id} onWishlistChange={handleWishlistChange} className="wishlist-button wish-on-saved" /> 
                     </div>
                   ))}
                 </div>
