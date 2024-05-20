@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbtack } from '@fortawesome/free-solid-svg-icons';
+import Modal from 'react-modal';
 
 const cities = [
     "Amman", "Zarqa", "Irbid", "Aqaba", "Mafraq",
@@ -20,8 +21,16 @@ function UpdateUserData() {
         user_location: '',
         phone_number: ''
     });
+    const [originalUserData, setOriginalUserData] = useState({});
     const [isEditing, setIsEditing] = useState({});
     const [selectedFile, setSelectedFile] = useState(null);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [passwordData, setPasswordData] = useState({
+        current_password: '',
+        new_password: '',
+        repeat_password: ''
+    });
+    const [passwordError, setPasswordError] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -34,6 +43,7 @@ function UpdateUserData() {
                 });
                 const data = await response.json();
                 setUserData(data);
+                setOriginalUserData(data);
             } catch (error) {
                 console.error('Error fetching user data:', error);
             }
@@ -55,15 +65,59 @@ function UpdateUserData() {
         setSelectedFile(e.target.files[0]);
     };
 
+    const handlePasswordChange = async (e) => {
+        e.preventDefault();
+        const { current_password, new_password, repeat_password } = passwordData;
+
+        // Validate passwords
+        if (new_password !== repeat_password) {
+            setPasswordError('Passwords do not match');
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8080/updatePassword`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${authToken}`,
+                },
+                body: JSON.stringify({ userPassword: current_password, newPassword: new_password }),
+            });
+
+            if (response.ok) {
+                setModalIsOpen(false);
+                setPasswordData({
+                    current_password: '',
+                    new_password: '',
+                });
+            } else {
+                console.error('Error updating password');
+            }
+        } catch (error) {
+            console.error('Error updating password:', error);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.append('user_name', userData.user_name);
-        formData.append('user_email', userData.user_email);
-        formData.append('password', userData.user_password);
-        formData.append('user_location', userData.user_location);
-        formData.append('phone_number', userData.phone_number);
+        if (userData.user_name !== originalUserData.user_name) {
+            formData.append('user_name', userData.user_name);
+        } else {
+            formData.append('user_name', originalUserData.user_name);
+        }
+        if (userData.user_location !== originalUserData.user_location) {
+            formData.append('user_location', userData.user_location);
+        } else {
+            formData.append('user_location', originalUserData.user_location);
+        }
+        if (userData.phone_number !== originalUserData.phone_number) {
+            formData.append('phone_number', userData.phone_number);
+        } else {
+            formData.append('phone_number', originalUserData.phone_number);
+        }
         if (selectedFile) {
             formData.append('image', selectedFile);
         }
@@ -112,34 +166,15 @@ function UpdateUserData() {
                     <div className="form-group">
                         <label>Email</label>
                         <div className="editable-field">
-                            {isEditing.user_email ? (
-                                <input
-                                    type="email"
-                                    name="user_email"
-                                    value={userData.user_email}
-                                    onChange={handleInputChange}
-                                />
-                            ) : (
-                                <span>{userData.user_email}</span>
-                            )}
-                            <FontAwesomeIcon icon={faThumbtack} onClick={() => handleEditClick('user_email')} />
+                            <span>{userData.user_email}</span>
                         </div>
                     </div>
 
                     <div className="form-group">
                         <label>Password</label>
                         <div className="editable-field">
-                            {isEditing.user_password ? (
-                                <input
-                                    type="password"
-                                    name="user_password"
-                                    value={userData.user_password}
-                                    onChange={handleInputChange}
-                                />
-                            ) : (
-                                <span>**********</span>
-                            )}
-                            <FontAwesomeIcon icon={faThumbtack} onClick={() => handleEditClick('user_password')} />
+                            <span>**********</span>
+                            <FontAwesomeIcon icon={faThumbtack} onClick={() => setModalIsOpen(true)} />
                         </div>
                     </div>
 
@@ -189,8 +224,48 @@ function UpdateUserData() {
 
                     <button className='update-user-data-btn' type="submit">Update</button>
                 </form>
+                <Modal
+                    isOpen={modalIsOpen}
+                    onRequestClose={() => setModalIsOpen(false)}
+                    contentLabel="Change Password"
+                    className="password-modal"
+                >
+                    <h2>Change Password</h2>
+                    <form onSubmit={handlePasswordChange}>
+                        <div className="form-group">
+                            <label>Current Password</label>
+                            <input
+                                type="password"
+                                name="current_password"
+                                value={passwordData.current_password}
+                                onChange={(e) => setPasswordData({ ...passwordData, current_password: e.target.value })}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>New Password</label>
+                            <input
+                                type="password"
+                                name="new_password"
+                                value={passwordData.new_password}
+                                onChange={(e) => setPasswordData({ ...passwordData, new_password: e.target.value })}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Repeat New Password</label>
+                            <input
+                                type="password"
+                                name="repeat_password"
+                                value={passwordData.repeat_password}
+                                onChange={(e) => setPasswordData({ ...passwordData, repeat_password: e.target.value })}
+                            />
+                        </div>
+                        {passwordError && <p className="error-message">{passwordError}</p>}
+                        <button type="submit">Update Password</button>
+                        <button type="button" onClick={() => setModalIsOpen(false)}>Cancel</button>
+                    </form>
+                </Modal>
             </div>
-      </div>
+        </div>
     );
 }
 

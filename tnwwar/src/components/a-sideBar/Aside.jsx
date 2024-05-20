@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faSave, faShoppingCart, faHistory, faUser, faTachometerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faHeart, faShoppingCart, faHistory, faUser, faTachometerAlt } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../../context/AuthContext';  // Adjust the import path accordingly
 
 import mainLogo from '../../assets/logos/mainLogo.svg';
@@ -17,9 +17,9 @@ function Aside({ activeTab, handleTabChange }) {
                 <FontAwesomeIcon icon={faHome} className="fa-light" style={{ color: '#444444', marginRight: '10px' }} />
                 Home
             </div>
-            <div className={`tab ${activeTab === 'saved' && 'active'}`} onClick={() => handleTabChange('saved')}>
-                <FontAwesomeIcon icon={faSave} className="fa-light" style={{ color: '#444444', marginRight: '10px' }} />
-                Saved
+            <div className={`tab ${activeTab === 'Wishlist' && 'active'}`} onClick={() => handleTabChange('Wishlist')}>
+                <FontAwesomeIcon icon={faHeart} className="fa-light" style={{ color: '#444444', marginRight: '10px' }} />
+                Wishlist
             </div>
             <div className={`tab ${activeTab === 'cart' && 'active'}`} onClick={() => handleTabChange('cart')}>
                 <FontAwesomeIcon icon={faShoppingCart} className="fa-light" style={{ color: '#444444', marginRight: '10px' }} />

@@ -18,7 +18,7 @@ function Header() {
             </div>
             <div className="login-button">
                 {authToken ? (
-                    <button className="logout-button" onClick={handleLogout}>
+                    <button className="logout-btn" onClick={handleLogout}>
                         <FontAwesomeIcon icon={faSignOutAlt} className="user-icon" />
                         Logout
                     </button>

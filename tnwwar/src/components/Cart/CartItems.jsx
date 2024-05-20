@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import useAddToCart from '../../hooks/useAddToCart';
 import useRemoveFromCart from '../../hooks/useRemoveFromCart';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 function CartItems() {
     const { authToken } = useAuth();
@@ -108,42 +110,51 @@ function CartItems() {
 
     return (
         <div className="cart-container">
-            <div className="cart-items-section">
-                <ul>
-                    {cartItems.map((item) => (
-                        <li key={item._id} className="cart-item">
-                            {item.productDetails ? (
-                                <>
-                                    <img src={item.productDetails.img_url} alt={item.productDetails.product_name} />
-                                    <div className='inner-data'>
-                                        <h3>{item.productDetails.product_name}</h3>
-                                        <p>{item.productDetails.description}</p>
-                                        <p className='price'>${item.productDetails.price}</p>
-                                        <div className="quantity-controls">
-                                            <button onClick={() => handleDecreaseQuantity(item.cart_product)}>-</button>
-                                            <span>Quantity: {item.quantity}</span>
-                                            <button onClick={() => handleIncreaseQuantity(item.cart_product)}>+</button>
-                                        </div>
-                                    </div>
-                                </>
-                            ) : (
-                                <p>Loading product details...</p>
-                            )}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div className="billing-section">
-                <h3>Billing</h3>
-                {cartItems.map((item) => (
-                    <div key={item._id}>
-                        <p>{item.productDetails.product_name} X {item.quantity}</p>
+            {cartItems.length === 0 ? (
+                <div className="empty-cart">
+                    <FontAwesomeIcon icon={faShoppingCart} size="5x" className='empty-icon' />
+                    <p>Your cart is empty</p>
+                </div>
+            ) : (
+                <>
+                    <div className="cart-items-section">
+                        <ul>
+                            {cartItems.map((item) => (
+                                <li key={item._id} className="cart-item">
+                                    {item.productDetails ? (
+                                        <>
+                                            <img src={item.productDetails.img_url} alt={item.productDetails.product_name} />
+                                            <div className='inner-data'>
+                                                <h3>{item.productDetails.product_name}</h3>
+                                                <p>{item.productDetails.description}</p>
+                                                <p className='price'>${item.productDetails.price}</p>
+                                                <div className="quantity-controls">
+                                                    <button onClick={() => handleDecreaseQuantity(item.cart_product)}>-</button>
+                                                    <span>Quantity: {item.quantity}</span>
+                                                    <button onClick={() => handleIncreaseQuantity(item.cart_product)}>+</button>
+                                                </div>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <p>Loading product details...</p>
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
                     </div>
-                ))}
-                <hr />
-                <p>Total: ${calculateTotal()}</p>
-                <button className="checkout-button" onClick={handleCheckout}>Check Out</button>
-            </div>
+                    <div className="billing-section">
+                        <h3>Billing</h3>
+                        {cartItems.map((item) => (
+                            <div key={item._id}>
+                                <p>{item.productDetails.product_name} X {item.quantity}</p>
+                            </div>
+                        ))}
+                        <hr />
+                        <p>Total: ${calculateTotal()}</p>
+                        <button className="checkout-button" onClick={handleCheckout}>Check Out</button>
+                    </div>
+                </>
+            )}
         </div>
     );
 }

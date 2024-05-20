@@ -47,7 +47,7 @@ function SellerDashboard() {
 
     const handleDeleteConfirm = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/deletedProducts/${selectedProduct}`, {
+            const response = await fetch(`http://localhost:8080/deleteProduct/${selectedProduct}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ function SellerDashboard() {
                             <td>{product.product_name}</td>
                             <td>{product.shop_name}</td>
                             <td>{product.rating}</td>
-                            <td>{product.product_category.category_name}</td>
+                            <td>{product.product_category ? product.product_category.category_name : ''}</td> {/* Conditional check */}
                             <td>{product.product_count}</td>
                             <td>${product.price}</td>
                             <td>{product.description}</td>

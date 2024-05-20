@@ -20,7 +20,7 @@ function useTabNavigation() {
             case 'home':
                 navigate('/');
                 break;
-            case 'saved':
+            case 'Wishlist':
                 navigate('/saved');
                 break;
             case 'cart':

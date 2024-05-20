@@ -4,6 +4,8 @@ import useTabNavigation from '../hooks/useTabNavigation';
 import Header from '../components/header/header';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHistory } from '@fortawesome/free-solid-svg-icons';
 
 function PurchaseHistory() {
   const { activeTab, handleTabChange } = useTabNavigation();
@@ -11,6 +13,7 @@ function PurchaseHistory() {
   const [purchaseHistory, setPurchaseHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [firstPurchase, setFirstPurchase] = useState(false); // State to track if it's the user's first purchase
 
   useEffect(() => {
     const fetchPurchaseHistory = async () => {
@@ -23,6 +26,10 @@ function PurchaseHistory() {
         // Sort purchase history by payment date (newest first)
         const sortedHistory = response.data.sort((a, b) => new Date(b.payment_At) - new Date(a.payment_At));
         setPurchaseHistory(sortedHistory);
+        // Check if purchase history is empty, indicating it's the user's first purchase
+        if (sortedHistory.length === 0) {
+          setFirstPurchase(true);
+        }
       } catch (error) {
         console.error('Error fetching purchase history', error);
         setError('Failed to fetch purchase history. Please try again later.');
@@ -51,7 +58,7 @@ function PurchaseHistory() {
             ) : error ? (
               <p>{error}</p>
             ) : purchaseHistory.length > 0 ? (
-                  <table className="table purchase-history-table">
+              <table className="table purchase-history-table">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -78,7 +85,16 @@ function PurchaseHistory() {
                 </tbody>
               </table>
             ) : (
-              <p>No purchase history available.</p>
+              <>
+                {firstPurchase ? (
+                        <div className="empty-cart">
+                          <FontAwesomeIcon icon={faHistory} size="5x" className='empty-icon' />
+                          <p>Welcome! It looks like you haven't made any purchases yet. Start shopping now!</p>
+                        </div>
+                ) : (
+                  <p>No purchase history available.</p>
+                )}
+              </>
             )}
           </div>
         </div>

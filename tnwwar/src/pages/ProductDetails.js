@@ -10,6 +10,9 @@ import useAddToCart from '../hooks/useAddToCart';
 import CartNotification from '../components/Cart/CartNotification';
 import { useAuth } from '../context/AuthContext';
 import StarRating from '../components/Home/StarRating';
+import HeartButton from '../components/cards/HeartButton';
+import StarRatingInput from '../components/rating/StarRatingInput';
+
 
 function ProductDetails() {
     const { id } = useParams();
@@ -18,11 +21,12 @@ function ProductDetails() {
     const [relatedProducts, setRelatedProducts] = useState([]);
     const [bestOfProducts, setBestOfProducts] = useState([]);
     const [newComment, setNewComment] = useState('');
-    const [showAllComments, setShowAllComments] = useState(false); // State to track if all comments should be displayed
+    const [showAllComments, setShowAllComments] = useState(false);
     const { addToCart, showPopup } = useAddToCart();
     const { authToken } = useAuth();
 
     useEffect(() => {
+        // Fetch product details
         axios.get(`http://localhost:8080/productDetails/${id}`)
             .then(response => {
                 const { productDetails, relatedProducts, bestOfProduct } = response.data;
@@ -33,7 +37,7 @@ function ProductDetails() {
             .catch(error => {
                 console.error('Error fetching product details:', error);
             });
-    }, [id, newComment]);
+    }, [id, newComment, authToken]);
 
     const handleAddToCart = async () => {
         try {
@@ -84,14 +88,17 @@ function ProductDetails() {
                                 <img src={product.img_url} alt={product.product_name} />
                             </div>
                             <div className='product_details_container'>
-                                <p><h3>{product.product_name}</h3></p>
-                                <StarRating rating={product.rating} />
+                                <h3>{product.product_name}</h3>
+                                <div className='heart-rating'>
+                                    <StarRating rating={product.rating} />
+                                    <HeartButton productId={product._id} />
+                                </div>
                                 <h5>Description</h5>
-                                <p><span>{product.description}</span></p>
+                                <p>{product.description}</p>
                                 <h5>Price</h5>
-                                <p><span>${product.price}</span></p>
+                                <p>${product.price}</p>
                                 <h5>Category</h5>
-                                <p><span>{product.product_category.category_name}</span></p>
+                                <p>{product.product_category.category_name}</p>
                                 <button className="button" onClick={handleAddToCart}>
                                     Add to cart
                                     <div className="hoverEffect">
@@ -127,18 +134,15 @@ function ProductDetails() {
                                     </form>
                                 </div>
                             </div>
+                            <StarRatingInput productId={product._id} />
                         </div>
                         <div className='container mt-5'>
                             <h2>Best of Products</h2>
-                            <div>
-                                <ProductCarousel products={bestOfProducts} />
-                            </div>
+                            <ProductCarousel products={bestOfProducts} />
                         </div>
                         <div className='container mt-5'>
                             <h2>Suggested Products</h2>
-                            <div>
-                                <ProductCarousel products={relatedProducts} />
-                            </div>
+                            <ProductCarousel products={relatedProducts} />
                         </div>
                     </div>
                 </div>

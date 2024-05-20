@@ -87,16 +87,16 @@
   margin-right: 5px;
 }
 
-.logout-button {
-
+.logout-btn {
+  background-color: #fff;
   color: red;
   border: none;
   padding: 10px 20px;
   cursor: pointer;
 }
 
-.logout-button:hover {
-  background-color: #f3f3f3;
+.logout-btn:hover {
+  background-color: #ddd;
   border-radius: 16px;
   transition: 1s;
 }
@@ -106,7 +106,7 @@
   padding: 20px;
   max-width: 220px;
   margin: 20px;
-  height: 450px;
+  height: 500px;
   transition: transform 0.3s;
   -webkit-transition: transform 0.3s;
   -moz-transition: transform 0.3s;
@@ -145,6 +145,16 @@
   cursor: pointer;
   color: red;
   z-index: 1;
+}
+
+.shop-name-card{
+  background-color: #009393;
+  padding: 6px;
+  border-radius: 6px;
+  color: #fff !important;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .product-image {
@@ -349,8 +359,12 @@
 .offer-right-details {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   margin: 10px 0;
+}
+.offer-right-details span{
+font-size: 16px;
+color: #009393;
 }
 
 .offer_product_location,
@@ -380,7 +394,13 @@
 .star-rating {
   display: flex;
 }
-
+.rating-btn{
+  border: none;
+  padding: 6px;
+  background-color: #009393;
+  color: #fff;
+  border-radius: 6px;
+}
 .star {
   color: #ffc107;
   margin-right: 2px;
@@ -465,7 +485,7 @@
   background: linear-gradient(135deg, #00E0C6, #A1D2FF);
   border-radius: 16px;
   color: white;
-  text-decoration: double;
+  cursor: pointer;
 }
 
 .special-offer-box img {
@@ -480,6 +500,22 @@
   margin-left: -25px;
 }
 
+.special-offer-image {
+  border-radius: 50%;
+  /* Make the image circular */
+  width: 100px;
+  /* Adjust image size */
+  height: 100px;
+  object-fit: cover;
+  /* Maintain aspect ratio */
+  margin-bottom: 10px;
+  /* Add some spacing */
+}
+
+.special-offer-box:hover {
+  background-color: #f2f2f2;
+  /* Change background color on hover */
+}
 /*----------------------- Login Style -----------------------*/
 .signin_container {
   display: flex;
@@ -667,6 +703,7 @@
 .product_image_container {
   flex: 0 0 auto;
   margin-right: 20px;
+  
 }
 
 .product_image_container img {
@@ -710,9 +747,10 @@
 .products_details_container {
   margin-top: 20px;
 }
-
-.products_details_content {
+.heart-rating{
   display: flex;
+  align-items: center;
+    gap: 20px;
 }
 
 .product_image_container img {
@@ -1053,16 +1091,6 @@
   margin-top: 5px;
 }
 
-.wishlist-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  /* Space between items */
-  max-width: 100%;
-  justify-content: center;
-  /* Center items horizontally */
-}
-
 .wishlist-item {
   position: relative;
   width: calc(50% - 20px);
@@ -1223,17 +1251,20 @@
   margin-bottom: 20px;
   color: #009393;
 }
+
 .update-user-container label {
   font-weight: bold;
   color: #009393;
 }
-.update-user-data-btn{
+
+.update-user-data-btn {
   border: none;
   padding: 6px;
   border-radius: 6px;
   background-color: #009393;
   color: white;
 }
+
 .form-group {
   margin-bottom: 15px;
 }
@@ -1453,4 +1484,142 @@
 /* -------------- category page ------------------ */
 .product-cat-page {
   padding: 25px;
+}
+
+/* ---------------------- star rating input-------------------  */
+.star-rating-input{
+  margin-top: 20px;
+}
+.star-rating-input .stars {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.star-rating-input .star {
+  font-size: 2rem;
+  color: #ddd;
+  transition: color 0.2s;
+}
+
+.star-rating-input .star.filled {
+  color: #f39c12;
+}
+/* ------------ empty styles ------------------------- */
+.empty-cart {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  /* Make it fill the entire viewport */
+  font-size: 24px;
+}
+
+.empty-cart p {
+  margin-top: 20px;
+  color: #c9c9c9;
+}
+
+.empty-icon {
+  color: #c9c9c9;
+}
+.password-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.password-modal h2 {
+  margin-bottom: 20px;
+}
+
+.password-modal .form-group {
+  margin-bottom: 15px;
+}
+
+.password-modal input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.password-modal button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.password-modal button:last-child {
+  margin-right: 0;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+.update-product-form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.update-product-form-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.update-product-form-container h2 {
+  margin-top: 0;
+}
+
+.update-product-form-container label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.update-product-form-container input[type="text"],
+.update-product-form-container textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.update-product-form-container .button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.update-product-form-container button {
+  padding: 8px 20px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+}
+
+.update-product-form-container button:hover {
+  background-color: #0056b3;
 }

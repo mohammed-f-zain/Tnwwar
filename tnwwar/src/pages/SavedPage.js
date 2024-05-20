@@ -4,7 +4,9 @@ import Aside from '../components/a-sideBar/Aside';
 import useTabNavigation from '../hooks/useTabNavigation';
 import Header from '../components/header/header';
 import { useAuth } from '../context/AuthContext'; // Import the useAuth hook
-import HeartButton from '../components/cards/HeartButton'; // Adjust the path based on your file structure
+import ProductCard from '../components/cards/ProductCard'; // Import the ProductCard component
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 function SavedPage() {
   const { activeTab, handleTabChange } = useTabNavigation();
@@ -51,24 +53,22 @@ function SavedPage() {
             {loading ? (
               <p>Loading...</p>
             ) : error ? (
-              <p>Error: {error}</p>
+              <p>{error}</p>
             ) : (
               <div>
                 <h2>Your Wishlist</h2>
-                <div className="wishlist-items">
-                  {wishlistItems.map(item => (
-                    <div key={item._id} className="wishlist-item">
-                      <div className="wishlist-item-header">
-                        <img src={item.img_url} alt={item.product_name} className="wishlist-item-image" />
-                      </div>
-                      <div className='wish-data'>
-                        <h3>{item.product_name}</h3>
-                        <p>${item.price}</p>
-                      </div>
-                        <HeartButton productId={item._id} onWishlistChange={handleWishlistChange} className="wishlist-button wish-on-saved" /> 
-                    </div>
-                  ))}
-                </div>
+                {wishlistItems.length === 0 ? (
+                  <div className="empty-cart">
+                    <FontAwesomeIcon icon={faHeart} size="5x" className='empty-icon' />
+                    <p>Add Some Products to Your WishList</p>
+                  </div>
+                ) : (
+                  <div className="wishlist-items">
+                    {wishlistItems.map(item => (
+                      <ProductCard key={item._id} product={item} />
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </div>

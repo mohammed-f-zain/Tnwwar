@@ -1,39 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import productimage from "../../assets/images/product.png"
-import StarRating from '../Home/StarRating';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 function RightAside() {
     const [dailyDeals, setDailyDeals] = useState([]);
+    const [specialOfferProduct, setSpecialOfferProduct] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
+        // Fetch all products
         axios.get('http://localhost:8080/allProducts')
             .then(response => {
                 // Shuffle the products array
                 const shuffledProducts = response.data.sort(() => Math.random() - 0.5);
-                // Get the first 5 products
+                // Get the first 10 products for daily deals
                 const randomProducts = shuffledProducts.slice(0, 10);
-                // Set the fetched random products in state
+                // Set the fetched random products in state for daily deals
                 setDailyDeals(randomProducts);
+                // Set a random product for special offer
+                const randomSpecialOfferProduct = shuffledProducts[Math.floor(Math.random() * shuffledProducts.length)];
+                setSpecialOfferProduct(randomSpecialOfferProduct);
             })
             .catch(error => {
                 console.error('Error fetching random products:', error);
             });
     }, []);
 
+    const handleSpecialOfferClick = () => {
+        if (specialOfferProduct) {
+            navigate(`/productDetails/${specialOfferProduct._id}`);
+        }
+    };
 
     return (
         <div className="r_aside-right-aside">
-            <div className="special-offer-box">
+            <div className="special-offer-box" onClick={handleSpecialOfferClick}>
                 <h4 className='special_offer_title'>Special Offer</h4>
-                <img src={productimage} alt="Special Offer" />
-                
+                {specialOfferProduct && (
+                    <img
+                        src={specialOfferProduct.img_url}
+                        alt="Special Offer"
+                        className="special-offer-image" // Apply circular shape style
+                    />
+                )}
                 <p>Buy It Now ➡️ </p>
-
             </div>
 
-            
             <div className="r_aside-daily-deals">
                 <h2>Daily Deals</h2>
                 {dailyDeals.map((deal, index) => (

@@ -58,11 +58,11 @@ function Offertab() {
                         <p className="offer_product_price">Price: ${randomProduct.price}</p>
                         <StarRating rating={randomProduct.rating} />
                         <div className="offer-right-details">
-                            <p className="offer_product_category">{randomProduct.product_category.category_name}</p>
-                            <p className="offer_product_shopname">{randomProduct.shop_name}</p>
-                            <p className="offer_product_location">{randomProduct.product_location}</p>
+                            <p className="offer_product_category"><span>Category </span>{randomProduct.product_category.category_name}</p>
+                            <p className="offer_product_category"><span>Shop Name  </span>{randomProduct.shop_name}</p>
+                            <p className="offer_product_location"><span>Location </span>{randomProduct.product_location}</p>
                         </div>
-                        <div className="d-flex">
+                        <div clssName="d-flex">
                             <button className="button" onClick={handleAddToCartClick}>
                                 Add to cart
                                 <div className="hoverEffect">
