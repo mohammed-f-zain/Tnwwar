@@ -21,7 +21,7 @@ function useTabNavigation() {
                 navigate('/');
                 break;
             case 'Wishlist':
-                navigate('/saved');
+                navigate('/wishlist');
                 break;
             case 'cart':
                 navigate('/cart');

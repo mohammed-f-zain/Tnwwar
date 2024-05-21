@@ -62,7 +62,7 @@ function Offertab() {
                             <p className="offer_product_category"><span>Shop Name  </span>{randomProduct.shop_name}</p>
                             <p className="offer_product_location"><span>Location </span>{randomProduct.product_location}</p>
                         </div>
-                        <div clssName="d-flex">
+                        <div className="d-flex">
                             <button className="button" onClick={handleAddToCartClick}>
                                 Add to cart
                                 <div className="hoverEffect">

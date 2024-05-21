@@ -1299,6 +1299,11 @@ color: #009393;
 .dash-header {
   align-items: center;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.dash-header img{
+  cursor: pointer;
 }
 
 .dash-header h4 {
@@ -1358,6 +1363,14 @@ color: #009393;
   background-color: red;
   padding: 3px;
   border-radius: 5px;
+}
+.update-dashboard{
+  margin-left: 10px;
+    border: none;
+      color: white;
+      background-color: rgb(24, 175, 245) ;
+      padding: 3px;
+      border-radius: 5px;
 }
 
 .popup {
@@ -1622,4 +1635,145 @@ color: #009393;
 
 .update-product-form-container button:hover {
   background-color: #0056b3;
+}
+
+
+
+
+/* Modal.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50000;
+}
+
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.update-product-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 400px;
+  /* Adjust the width as needed */
+}
+
+.update-product-popup h3 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.update-product-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.update-product-form input,
+.update-product-form textarea,
+.update-product-form select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.update-product-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 8px top 50%;
+  background-size: 18px;
+}
+
+.update-product-form button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.update-product-form button:hover {
+  background-color: #0056b3;
+}
+
+.cancel-button {
+  background-color: #dc3545;
+}
+
+.cancel-button:hover {
+  background-color: #c82333;
+}
+/* ================check out ====================== */
+.checkout {
+  background-color: #f2f2f2;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+}
+.center-check{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.checkout h1 {
+  margin-bottom: 20px;
+}
+
+.checkout p {
+  margin-bottom: 20px;
+}
+
+.checkout .btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.checkout .btn-primary {
+  background-color: #007bff;
+  border: none;
+}
+
+.checkout .btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.checkout .btn-secondary {
+  background-color: #6c757d;
+  border: none;
+}
+
+.checkout .btn-secondary:hover {
+  background-color: #5a6268;
 }

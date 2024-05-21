@@ -42,24 +42,27 @@ function CheckoutPage() {
     };
 
     return (
-        <div className="container mt-5">
-            <h1>Checkout</h1>
-            <p>Complete your purchase by clicking the button below:</p>
-            {loading ? (
-                <p>Loading...</p>
-            ) : error ? (
-                <div>
-                    <p>{error}</p>
-                    <button className="btn btn-primary" onClick={handleRetry}>
-                        Retry Checkout
-                    </button>
-                </div>
-            ) : (
-                <a href={checkoutUrl} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
-                    Proceed to Checkout
-                </a>
-            )}
-            <Link to="/cart" className="btn btn-secondary ml-2">Back to Cart</Link>
+        <div className='backg center-check'>
+            <div className=" checkout">
+                <h1>Checkout</h1>
+
+                <p>Complete your purchase by clicking the button below:</p>
+                {loading ? (
+                    <p>Transaction Under Reviwe Please Wait</p>
+                ) : error ? (
+                    <div>
+                        <p>{error}</p>
+                        <button className="btn btn-primary" onClick={handleRetry}>
+                            Retry Checkout
+                        </button>
+                    </div>
+                ) : (
+                    <a href={checkoutUrl} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                        Proceed to Checkout
+                    </a>
+                )}
+                <Link to="/cart" className="btn btn-secondary " style={{ marginLeft: "25px" }}>Back to Cart</Link>
+            </div>
         </div>
     );
 }

@@ -55,7 +55,7 @@ function App() {
             <Route path="/signupuser" element={<Signup />} />
             <Route path="/signupseller" element={<SignupSeller />} />
             <Route path="/Categories" element={<Categorieslist />} />
-            <Route path="/saved" element={<PrivateRoute element={<SavedPage />} />} />
+              <Route path="/wishlist" element={<PrivateRoute element={<SavedPage />} />} />
             <Route path="/cart" element={<PrivateRoute element={<Cart />} />} />
             <Route path="/purchase-history" element={<PrivateRoute element={<PrchaseHistory />} />} />
               <Route path="/sellerdashboard" element={<PrivateRoute element={<SellerDashBoard />} />} />

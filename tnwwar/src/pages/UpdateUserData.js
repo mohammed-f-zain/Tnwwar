@@ -3,8 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbtack } from '@fortawesome/free-solid-svg-icons';
+import logo from "../assets/logos/mainLogo.svg";
 import Modal from 'react-modal';
-
 const cities = [
     "Amman", "Zarqa", "Irbid", "Aqaba", "Mafraq",
     "Jerash", "Madaba", "Karak", "Tafileh", "Ma'an",
@@ -13,6 +13,7 @@ const cities = [
 
 function UpdateUserData() {
     const { id } = useParams();
+    const Navigate = useNavigate();
     const { authToken } = useAuth();
     const [userData, setUserData] = useState({
         user_name: '',
@@ -142,7 +143,10 @@ function UpdateUserData() {
     };
 
     return (
-        <div className='backg d-flex'>
+        <div className='backg d-flex flex-column p-5 g-5'>
+            <div className='d-flex dash-header' >
+                <img src={logo} alt="Logo" onClick={() => Navigate('/')} />
+            </div>
             <div className="update-user-container ">
                 <h2>Update Profile Information</h2>
                 <form onSubmit={handleSubmit}>

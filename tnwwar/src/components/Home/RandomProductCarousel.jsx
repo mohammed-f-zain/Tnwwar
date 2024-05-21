@@ -11,7 +11,7 @@ function RandomProductCarousel() {
                 const response = await axios.get('http://localhost:8080/allProducts');
                 const allProducts = response.data;
                 const randomIndexes = [];
-                while (randomIndexes.length < 10) {
+                while (randomIndexes.length < 1) {
                     const randomIndex = Math.floor(Math.random() * allProducts.length);
                     if (!randomIndexes.includes(randomIndex)) {
                         randomIndexes.push(randomIndex);
