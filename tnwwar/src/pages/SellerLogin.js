@@ -36,7 +36,7 @@ function SellerLogin() {
         }
 
         try {
-            const response = await fetch('http://localhost:8080/sellerLogin', { 
+            const response = await fetch('http://localhost:8080/sellerLogin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -50,11 +50,15 @@ function SellerLogin() {
             const data = await response.json();
 
             if (response.ok) {
-                // Login successful
-                await login(data.accessToken);
-                setLoginSuccess('Login successful!');
-                setGeneralError('');
-                navigate('/sellerdashboard'); // Navigate to the seller dashboard
+                if (data.is_deleted) {
+                    setGeneralError('Your account may not be active yet.');
+                } else {
+                    // Login successful
+                    await login(data.accessToken);
+                    setLoginSuccess('Login successful!');
+                    setGeneralError('');
+                    navigate('/sellerdashboard'); 
+                }
             } else {
                 // Login failed
                 setGeneralError(data.error || 'Login failed. Please try again.');
@@ -64,6 +68,7 @@ function SellerLogin() {
             setGeneralError('An unexpected error occurred. Please try again.');
         }
     };
+
 
     return (
         <div className='signin_container'>

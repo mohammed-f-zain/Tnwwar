@@ -93,26 +93,27 @@ function SellerDashboard() {
             <div className='d-flex dash-header' >
                 <img src={logo} alt="Logo" onClick={() => Navigate('/')} />
                 <h4>Here You can Control All Your Products</h4>
-            <div className='add-button'>
-                <button className="button" onClick={handleAddProductFormOpen}>
-                    Add New Product +
-                    <div className="hoverEffect">
-                        <div></div>
-                    </div>
-                </button>
-            </div>
+                <div className='add-button'>
+                    <button className="button" onClick={handleAddProductFormOpen}>
+                        Add New Product +
+                        <div className="hoverEffect">
+                            <div></div>
+                        </div>
+                    </button>
+                </div>
             </div>
             <table className="product-table">
                 <thead>
                     <tr>
                         <th>Product Image</th>
                         <th>Product Name</th>
+                        <th>Description</th>
                         <th>Shop Name</th>
                         <th>Rating</th>
                         <th>Category</th>
+                        <th>Location</th>
                         <th>Product Count</th>
                         <th>Price</th>
-                        <th>Description</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -121,12 +122,13 @@ function SellerDashboard() {
                         <tr key={product._id}>
                             <td><img className='product-image' src={product.img_url} alt="Product" /></td>
                             <td>{product.product_name}</td>
+                            <td>{product.description}</td>
                             <td>{product.shop_name}</td>
                             <td>{product.rating}</td>
                             <td>{product.product_category ? product.product_category.category_name : ''}</td>
+                            <td>{product.product_location}</td>
                             <td>{product.product_count}</td>
                             <td>${product.price}</td>
-                            <td>{product.description}</td>
                             <td>
                                 <button className='delete-dashboard' onClick={() => handleDeleteConfirmation(product._id)}>Delete</button>
                                 <button className='update-dashboard' onClick={() => handleUpdateProductFormOpen(product)}>Update</button>

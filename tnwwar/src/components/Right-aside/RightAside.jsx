@@ -15,11 +15,11 @@ function RightAside() {
                 // Shuffle the products array
                 const shuffledProducts = response.data.sort(() => Math.random() - 0.5);
                 // Get the first 10 products for daily deals
-                const randomProducts = shuffledProducts.slice(0, 1);
+                const randomProducts = shuffledProducts.slice(0, shuffledProducts.length/4);
                 // Set the fetched random products in state for daily deals
                 setDailyDeals(randomProducts);
                 // Set a random product for special offer
-                const randomSpecialOfferProduct = shuffledProducts[Math.floor(Math.random() * shuffledProducts.length)];
+                const randomSpecialOfferProduct = shuffledProducts[Math.floor(Math.random() * shuffledProducts.length )];
                 setSpecialOfferProduct(randomSpecialOfferProduct);
             })
             .catch(error => {

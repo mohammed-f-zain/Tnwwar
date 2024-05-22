@@ -10,7 +10,9 @@ const useAddToCart = () => {
     const addToCart = async (productId) => {
         try {
             if (!authToken) {
-                throw new Error('No auth token available');
+                // Navigate to login page if user is not authenticated
+                window.location.href = '/login';
+                return;
             }
 
             const response = await axios.post(`http://localhost:8080/cartIncrement/${productId}`, {}, {

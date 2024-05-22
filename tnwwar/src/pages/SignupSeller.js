@@ -1,6 +1,8 @@
+// SignupSeller.js
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from "../assets/logos/mainLogo.svg";
+import AccountReviewModal from '../components/signup/AccountReviewModal';
 
 function SignupSeller() {
     const [username, setUsername] = useState('');
@@ -18,16 +20,14 @@ function SignupSeller() {
     const [locationError, setLocationError] = useState('');
     const [commercialRecordError, setCommercialRecordError] = useState('');
     const [generalError, setGeneralError] = useState('');
-    const [signupSuccess, setSignupSuccess] = useState('');
+    const [signupSuccess, setSignupSuccess] = useState(false);
 
     const navigate = useNavigate();
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[0-9]{10}$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    const commercialRecordRegex = /^[0-9]{10}$/;
 
-    // Jordan cities
     const jordanCities = ['Amman', 'Irbid', 'Zarqa', 'Aqaba', 'Madaba', 'Salt', 'Karak', 'Maan', 'Tafila', 'Jerash', 'Mafraq', 'Ajloun'];
 
     const handleEmailChange = (e) => {
@@ -81,18 +81,25 @@ function SignupSeller() {
     };
 
     const handleCommercialRecordChange = (e) => {
-        const value = e.target.value;
-        setCommercialRecord(value);
+        const file = e.target.files[0];
+        setCommercialRecord(file);
 
-        if (!commercialRecordRegex.test(value)) {
-            setCommercialRecordError('Commercial record must contain 10 numbers');
-        } else {
-            setCommercialRecordError('');
+        if (file) {
+            if (file.type !== 'application/pdf') {
+                setCommercialRecordError('Commercial record must be a PDF file');
+            } else {
+                setCommercialRecordError('');
+            }
         }
     };
 
     const handleSignup = async (e) => {
         e.preventDefault();
+
+        if (!username || !email || !password || !repeatPassword || !phoneNumber || !location || !commercialRecord) {
+            setGeneralError('Please fill in all fields');
+            return;
+        }
 
         if (emailError || phoneNumberError || passwordError || repeatPasswordError || commercialRecordError) {
             setGeneralError('Please correct the errors before submitting.');
@@ -100,30 +107,25 @@ function SignupSeller() {
         }
 
         try {
+            const formData = new FormData();
+            formData.append('user_name', username);
+            formData.append('user_email', email);
+            formData.append('password', password);
+            formData.append('phone_number', phoneNumber);
+            formData.append('user_location', location);
+            formData.append('image', commercialRecord);
+
             const response = await fetch('http://localhost:8080/sellerSignUp', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    user_name: username,
-                    user_email: email,
-                    password: password,
-                    phone_number: phoneNumber,
-                    user_location: location,
-                    Commercial_Record: commercialRecord,
-                }),
+                body: formData,
             });
 
             const data = await response.json();
 
             if (response.ok) {
-                // Sign-up successful
-                setSignupSuccess('Sign-up successful!');
-                setGeneralError('');
-                navigate('/login'); // Redirect to login page after successful sign-up
+                setSignupSuccess(true); // Set signup success state to true
+                navigate('/login');
             } else {
-                // Sign-up failed
                 setGeneralError(data.error || 'Sign-up failed. Please try again.');
             }
         } catch (error) {
@@ -214,12 +216,11 @@ function SignupSeller() {
                     </div>
 
                     <div className='signup_input_group'>
-                        <label htmlFor='commercialRecord'>Commercial Record</label>
+                        <label htmlFor='commercialRecord'>Commercial Record (PDF only)</label>
                         <input
-                            type='text'
+                            type='file'
                             id='commercialRecord'
-                            placeholder='Enter your commercial record'
-                            value={commercialRecord}
+                            accept='.pdf'
                             onChange={handleCommercialRecordChange}
                         />
                         {commercialRecordError && <p style={{ color: 'red' }}>{commercialRecordError}</p>}
@@ -228,7 +229,12 @@ function SignupSeller() {
                 </form>
 
                 {generalError && <p style={{ color: 'red' }}>{generalError}</p>}
-                {signupSuccess && <p style={{ color: 'green' }}>{signupSuccess}</p>}
+                {signupSuccess && (
+                    <>
+                        <p style={{ color: 'green' }}>Sign-up successful! Your account is under review.</p>
+                        <AccountReviewModal isOpen={signupSuccess} />
+                    </>
+                )}
 
                 <div className='signup_divider'>_________ Already have an account? _________</div>
                 <div className='signup_extra_buttons'>
@@ -238,4 +244,5 @@ function SignupSeller() {
         </div>
     );
 }
+
 export default SignupSeller;

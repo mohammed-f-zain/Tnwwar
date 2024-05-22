@@ -67,7 +67,7 @@ function PurchaseHistory() {
                     <th>Quantity</th>
                     <th>Total Amount</th>
                     <th>Date</th>
-                    <th>Location</th>
+                    <th>Shop Location</th>
                   </tr>
                 </thead>
                 <tbody>

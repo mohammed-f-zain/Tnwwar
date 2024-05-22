@@ -56,6 +56,7 @@
   display: flex;
   align-items: center;
   width: 100%;
+  position: relative;
 }
 
 .search-box input[type="text"] {
@@ -100,7 +101,62 @@
   border-radius: 16px;
   transition: 1s;
 }
+.search-results {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
 
+}
+
+.search-result-item {
+  padding: 8px 16px;
+  display: flex;
+  border-bottom:1px solid black;
+  border-radius: 0px;
+  color: #000;
+  justify-content: space-between;
+}
+.search-result-item:first-child {
+  padding: 8px 16px;
+  display: flex;
+  border-bottom:1px solid black;
+  border-radius: 16px 16px 0px 0px;
+}
+.search-result-item:hover {
+  padding: 8px 16px;
+  display: flex;
+  background-color: #d1d1d1;
+  transition: 1s;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+
+.search-result-item a {
+  text-decoration: none;
+  color: #333;
+}
+.search-result-item img {
+  width: 50px;
+  /* Adjust according to your preference */
+  height: 50px;
+  /* Adjust according to your preference */
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.search-data-tags{
+  color: #6e6e6e;
+  display: flex;
+  gap: 5px;
+}
 /*----------------------- Home Carsoul style (Card) -----------------------*/
 .product-card {
   padding: 20px;
@@ -627,12 +683,12 @@ color: #009393;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   background-color: #a1d2ff;
   background-image: url('./assets/images/background.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  padding: 25px;
 }
 
 .signup_inner {
@@ -996,7 +1052,7 @@ color: #009393;
 .purchase-history-table th,
 .purchase-history-table td {
   padding: 10px;
-  text-align: left;
+  text-align: center;
   border-bottom: 1px solid #ddd;
 }
 
@@ -1056,7 +1112,7 @@ color: #009393;
 }
 
 .category-card {
-  width: 150px;
+  width: 140px;
   margin: 20px;
   padding: 20px;
   border-radius: 8px;
@@ -1673,8 +1729,7 @@ color: #009393;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  width: 400px;
-  /* Adjust the width as needed */
+  
 }
 
 .update-product-popup h3 {
@@ -1692,7 +1747,7 @@ color: #009393;
 .update-product-form select {
   width: 100%;
   padding: 8px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -1776,4 +1831,29 @@ color: #009393;
 
 .checkout .btn-secondary:hover {
   background-color: #5a6268;
+}
+.signup-seller-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-seller-modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.signup-seller-modal-icon {
+ 
+}
+
+.signup-seller-modal-text {
+  margin-left: 10px;
 }

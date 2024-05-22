@@ -20,8 +20,7 @@ function UpdateForm({ product, onClose, onUpdate }) {
         setPrice(product.price || '');
         setProductCount(product.product_count || '');
         setProductLocation(product.product_location || '');
-        setCategory(product.product_category ? product.product_category.category_name : '');
-        // Assuming image state is not managed here as updating the image is optional and more complex
+        setCategory(product.product_category ? product.product_category._id : ''); // Use _id of selected category
         fetchCategories();
     }, [product]);
 
@@ -53,7 +52,6 @@ function UpdateForm({ product, onClose, onUpdate }) {
         formData.append('price', price);
         formData.append('product_count', productCount);
         formData.append('product_location', productLocation);
-        
         formData.append('product_category', category);
         if (image) {
             formData.append('image', image);
@@ -73,9 +71,11 @@ function UpdateForm({ product, onClose, onUpdate }) {
                 onClose();
             } else {
                 console.error('Failed to update product');
+                alert('Failed to update product. Please try again.');
             }
         } catch (error) {
             console.error('An error occurred while updating product:', error);
+            alert('An error occurred while updating product. Please try again.');
         }
     };
 
@@ -106,10 +106,10 @@ function UpdateForm({ product, onClose, onUpdate }) {
                 <select id="category" value={category} onChange={(e) => setCategory(e.target.value)} required>
                     <option value="">Select Category</option>
                     {categories.map(category => (
-                        <option key={category._id} value={category.category_name}>{category.category_name}</option>
+                        <option key={category._id} value={category._id}>{category.category_name}</option> // Use _id of category
                     ))}
                 </select>
-               
+
                 <label htmlFor="image">Image</label>
                 <input type="file" id="image" onChange={handleImageChange} />
                 <div className="button-group">
